@@ -5,20 +5,22 @@
 using namespace std;
 
 
-bool is_jolly(const vector<int>& nums)
+bool is_jolly(const vector<int> &nums)
 {
     if (nums.size() == 1)
         return true;
 
     vector<bool> diffs(nums.size(), false);
 
-    for (int i = 1; i < nums.size(); i++) {
+    for (int i = 1; i < nums.size(); i++)
+    {
         int diff = abs(nums[i] - nums[i - 1]);
         if (diff < diffs.size())
             diffs[diff] = true;
     }
 
-    for (int i = 1; i < diffs.size(); i++) {
+    for (int i = 1; i < diffs.size(); i++)
+    {
         if (!diffs[i])
             return false;
     }
@@ -30,9 +32,11 @@ bool is_jolly(const vector<int>& nums)
 int main()
 {
     int n;
-    while (cin >> n) {
+    while (cin >> n)
+    {
         vector<int> nums(n);
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             int x;
             cin >> x;
             nums[i] = x;

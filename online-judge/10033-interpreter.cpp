@@ -1,5 +1,5 @@
-#include <iostream>
 #include <array>
+#include <iostream>
 
 
 using namespace std;
@@ -9,8 +9,8 @@ std::array<int, 10> registers;
 std::array<int, 1000> memory;
 
 
-int executed = 0;  // total instructions executed
-int pc = 0;  // program counter
+int executed = 0; // total instructions executed
+int pc = 0;       // program counter
 
 
 void reset()
@@ -99,62 +99,56 @@ void setMemoryFromRegister(int s, int a)
 // 0ds
 void gotoFromRegister(int d, int s)
 {
-    if (registers[s] != 0) {
+    if (registers[s] != 0)
+    {
         pc = registers[d];
     }
-    else {
+    else
+    {
         pc++;
     }
     executed++;
 }
-
-void print()
-{
-    cout << "regs: ";
-    for (int elem : registers)
-        cout << elem << " ";
-    cout << " pc: " << pc << "\n";
-}
-
 
 void run(int instruction)
 {
     int cmd = (instruction / 100) % 10;
     int arg1 = (instruction / 10) % 10;
     int arg2 = instruction % 10;
-    switch (cmd) {
-    case 1:
-        halt();
-        break;
-    case 2:
-        setRegister(arg1, arg2);
-        break;
-    case 3:
-        addToRegister(arg1, arg2);
-        break;
-    case 4:
-        multiplyRegister(arg1, arg2);
-        break;
-    case 5:
-        setRegisterFromRegister(arg1, arg2);
-        break;
-    case 6:
-        addRegisterFromRegister(arg1, arg2);
-        break;
-    case 7:
-        multiplyRegisterFromRegister(arg1, arg2);
-        break;
-    case 8:
-        setRegisterFromMemory(arg1, arg2);
-        break;
-    case 9:
-        setMemoryFromRegister(arg1, arg2);
-        break;
-    case 0:
-        gotoFromRegister(arg1, arg2);
-        break;
-    default:
-        break;
+    switch (cmd)
+    {
+        case 1:
+            halt();
+            break;
+        case 2:
+            setRegister(arg1, arg2);
+            break;
+        case 3:
+            addToRegister(arg1, arg2);
+            break;
+        case 4:
+            multiplyRegister(arg1, arg2);
+            break;
+        case 5:
+            setRegisterFromRegister(arg1, arg2);
+            break;
+        case 6:
+            addRegisterFromRegister(arg1, arg2);
+            break;
+        case 7:
+            multiplyRegisterFromRegister(arg1, arg2);
+            break;
+        case 8:
+            setRegisterFromMemory(arg1, arg2);
+            break;
+        case 9:
+            setMemoryFromRegister(arg1, arg2);
+            break;
+        case 0:
+            gotoFromRegister(arg1, arg2);
+            break;
+        default:
+            break;
     }
 }
 
@@ -165,26 +159,29 @@ int main()
     getline(cin, line);
     int count = stoi(line);
     getline(cin, line); // consume blank line
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++)
+    {
         reset();
 
         // load content into memory
         int c = 0;
         line = "";
-        while (getline(cin, line)) {
-            if (line == "") {
+        while (getline(cin, line))
+        {
+            if (line == "")
+            {
                 break;
             }
 
             int content = stoi(line);
             memory[c++] = content;
-            // cout << "content: " << content << endl;
         }
 
-        if (c != 0) {
-            while (pc != -1) {
+        if (c != 0)
+        {
+            while (pc != -1)
+            {
                 run(memory[pc]);
-                // print();
             }
             cout << executed << '\n';
         }

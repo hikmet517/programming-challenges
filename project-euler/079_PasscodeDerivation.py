@@ -1,39 +1,69 @@
-import functools
-from itertools import permutations
-
-patterns = []
-with open("p079_keylog.txt") as f:
-    for line in f:
-        line = line.strip()
-        patterns.append([int(line[0]), int(line[1])])
-        patterns.append([int(line[1]), int(line[2])])
-        patterns.append([int(line[0]), int(line[2])])
+from subprocess import run
+from queue import Queue
 
 
-patterns.sort()
+def read_graph() -> dict[int, list[int]]:
+    graph = {}
+    with open("p079_keylog.txt") as f:
+        for line in f:
+            line = line.strip()
+            x = int(line[0])
+            y = int(line[1])
+            z = int(line[2])
+            if x not in graph:
+                graph[x] = []
+            graph[x].append(y)
+            graph[x].append(z)
+            if y not in graph:
+                graph[y] = []
+            graph[y].append(z)
+        for x in graph:
+            graph[x] = list(set(graph[x]))
+        return graph
 
-d = []
-last = patterns[0]
-count = 0
-for p in patterns:
-    if last == p:
-        count += 1
-    else:
-        d.append([count, last])
-        last = p
-        count = 1
 
-d.sort(reverse=True)
-for p in d:
-    print(p)
+def draw_graph(graph):
+    with open("079_passcode-graph.dot", "w") as fp:
+        fp.write("digraph {\n")
+        for n in graph:
+            for m in graph[n]:
+                fp.write(f"  {n} -> {m}\n")
+        fp.write("}\n")
+
+    run("dot -Tpng 079_passcode-graph.dot -o 079_passcode-graph.png", shell=True)
 
 
-# def getPerms(i̇np, constriants):
-#     for comb in permutations(inp):
-#         print(comb)
+def topological_sort(graph: dict[int, list[int]]):
+    # find all nodes
+    nodes = set()
+    for fr in graph:
+        nodes.add(fr)
+        for to in graph[fr]:
+            nodes.add(to)
 
-with open('079_passcode-graph.dot', 'w') as f:
-    f.write('digraph {\n')
-    for p in d:
-        f.write(f'  {p[1][0]} -> {p[1][1]}\n')
-    f.write('}\n')
+    l = []
+    marked = set()
+
+    def visit(n):
+        if n in marked:
+            return
+
+        if n in graph:
+            for m in graph[n]:
+                visit(m)
+
+        marked.add(n)
+        l.append(n)
+
+    while True:
+        unmarked = nodes - marked
+        if len(unmarked) == 0:
+            l.reverse()
+            return l
+        visit(unmarked.pop())
+
+
+graph = read_graph()
+# draw_graph(graph)
+sorted = topological_sort(graph)
+print(sorted)
