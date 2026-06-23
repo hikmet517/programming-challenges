@@ -62,7 +62,7 @@
                   #f)))))
 
 
-(define word-list (read-words "098_words.txt"))
+(define word-list (read-words "p098_words.txt"))
 (define word-sign-table (map (λ (w) (cons (word-sign w) w))
                              word-list))
 (define anagrams-table-temp (filter (λ (x) (> (length x) 1))

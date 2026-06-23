@@ -8,7 +8,7 @@
             (loop (cons c lst) (read-char)))))))
 
 ;; read all data
-(define data (read-file "013_data.txt"))
+(define data (read-file "p013_data.txt"))
 
 (define (split-string str c)
   (let ((len (string-length str)))

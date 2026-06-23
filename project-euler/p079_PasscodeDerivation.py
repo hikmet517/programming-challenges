@@ -23,7 +23,7 @@ def read_graph() -> dict[int, list[int]]:
 
 
 def draw_graph(graph):
-    with open("079_passcode-graph.dot", "w") as fp:
+    with open("p079_passcode-graph.dot", "w") as fp:
         fp.write("digraph {\n")
         for n in graph:
             for m in graph[n]:
