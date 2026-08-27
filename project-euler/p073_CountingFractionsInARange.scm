@@ -1,0 +1,28 @@
+(define (gcd x y)
+  (if (= y 0)
+      x
+      (gcd y (modulo x y))))
+
+(define (generate-numerator denom min max)
+  (let ((min-num (ceiling (* denom min)))
+        (max-num (floor (* denom max)))
+        (lst (list)))
+    (do ((i min-num (+ 1 i)))
+        ((> i max-num) (reverse lst))
+      (if (and (= (gcd i denom) 1)
+               (> (/ i denom) min)
+               (< (/ i denom) max))
+          (set! lst (cons i lst))))))
+
+(define (solve)
+  (let ((min (/ 1 3))
+        (max (/ 1 2))
+        (sum 0))
+    (do ((denom 2 (+ denom 1)))
+        ((> denom 12000) sum)
+      (set! sum (+ sum (length (generate-numerator denom min max)))))
+    (display "result: ")
+    (display sum)
+    (newline)))
+
+(solve)

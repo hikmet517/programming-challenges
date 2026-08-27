@@ -1,0 +1,22 @@
+(define (digits x)
+  (do ((lst (list)))
+      ((= x 0) lst)
+    (set! lst (cons (remainder x 10) lst))
+    (set! x (quotient x 10))))
+
+(define (digits-sorted x)
+  (sort < (digits x)))
+
+(define (solve)
+  (do ((i 10 (+ i 1)))
+      ((= i 1000000))
+    (let ((digs (digits-sorted i)))
+      (if (and (equal? digs (digits-sorted (* 2 i)))
+               (equal? digs (digits-sorted (* 3 i)))
+               (equal? digs (digits-sorted (* 4 i)))
+               (equal? digs (digits-sorted (* 5 i)))
+               (equal? digs (digits-sorted (* 6 i))))
+          (begin
+            (display "result: ")
+            (display i)
+            (newline))))))
