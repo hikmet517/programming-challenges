@@ -36,7 +36,7 @@
        (let loop ((k (vector-length vec))
                   (vec vec))
          (if (= k 1)
-             body ...
+             (begin body ...)
              (begin
                (loop (- k 1) vec)
                (do ((i 0 (+ i 1)))
