@@ -4,7 +4,7 @@ from queue import Queue
 
 def read_graph() -> dict[int, list[int]]:
     graph = {}
-    with open("p079_keylog.txt") as f:
+    with open("0079_keylog.txt") as f:
         for line in f:
             line = line.strip()
             x = int(line[0])

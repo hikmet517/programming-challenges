@@ -19,7 +19,7 @@ int solve(const vector<vector<int>> &v, vector<vector<int>> &memo, int i = 0, in
 
 int main()
 {
-    ifstream in("p067_triangle.txt");
+    ifstream in("0067_triangle.txt");
 
     vector<vector<int>> v;
     string line;

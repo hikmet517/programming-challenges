@@ -28,7 +28,7 @@ int main()
 {
     vector<vector<uint64_t>> data;
 
-    ifstream fd("p081_matrix.txt");
+    ifstream fd("0081_matrix.txt");
     string line;
     while (getline(fd, line))
     {

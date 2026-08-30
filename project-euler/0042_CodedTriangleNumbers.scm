@@ -47,7 +47,7 @@
 
 
 (define (solve)
-  (let* ((file-content (read-file "p042_words.txt"))
+  (let* ((file-content (read-file "0042_words.txt"))
          (words (map (lambda (s) (substring s 1 (- (string-length s) 1)))
                      (split-string file-content #\,)))
          (count 0))
