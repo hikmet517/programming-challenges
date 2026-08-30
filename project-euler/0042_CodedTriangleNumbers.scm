@@ -1,11 +1,11 @@
 (define (read-file f)
   (with-input-from-file f
     (lambda ()
-      (let loop ((lst '())
-                 (c (read-char)))
-        (if (eof-object? c)
-            (apply string (reverse lst))
-            (loop (cons c lst) (read-char)))))))
+      (let loop ((lst '()))
+        (let ((c (read-char)))
+          (if (eof-object? c)
+              (list->string (reverse lst))
+              (loop (cons c lst))))))))
 
 
 (define (split-string str c)
@@ -24,8 +24,9 @@
 
 
 (define (word->num word)
-  (apply + (map (lambda (c) (1+ (- (char->integer (char-upcase c))
-                                   (char->integer #\A))))
+  (apply + (map (lambda (c) (+ (- (char->integer (char-upcase c))
+                                  (char->integer #\A))
+                               1))
                 (string->list word))))
 
 
@@ -46,17 +47,17 @@
            #f))))
 
 
-(define (solve)
+(define (main)
   (let* ((file-content (read-file "0042_words.txt"))
          (words (map (lambda (s) (substring s 1 (- (string-length s) 1)))
                      (split-string file-content #\,)))
          (count 0))
     (for-each (lambda (w)
                 (if (triangle-num? (word->num w))
-                    (set! count (1+ count))))
+                    (set! count (+ count 1))))
               words)
     count))
 
 
-(display (solve))  ; 162
+(display (main))  ; 162
 (newline)

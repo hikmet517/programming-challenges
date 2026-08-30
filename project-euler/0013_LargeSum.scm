@@ -1,11 +1,11 @@
 (define (read-file f)
   (with-input-from-file f
     (lambda ()
-      (let loop ((lst '())
-                 (c (read-char)))
-        (if (eof-object? c)
-            (apply string (reverse lst))
-            (loop (cons c lst) (read-char)))))))
+      (let loop ((lst '()))
+        (let ((c (read-char)))
+          (if (eof-object? c)
+              (list->string (reverse lst))
+              (loop (cons c lst))))))))
 
 ;; read all data
 (define data (read-file "0013_data.txt"))
