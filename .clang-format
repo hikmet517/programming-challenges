@@ -1,6 +1,7 @@
 ﻿---
 AllowShortFunctionsOnASingleLine: None
 BreakBeforeBraces: Allman
+BreakTemplateDeclarations: true
 ColumnLimit: 95
 IndentCaseLabels: true
 IndentWidth: 4
