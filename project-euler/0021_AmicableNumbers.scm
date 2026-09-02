@@ -1,0 +1,32 @@
+(define (divisors num)
+  (let loop ((i 1)
+             (lst '()))
+    (if (> i (/ num 2))
+        (reverse lst)
+        (loop (+ i 1)
+              (if (= (modulo num i) 0)
+                  (cons i lst)
+                  lst)))))
+
+(define (sum-of-divisors num)
+  (apply + (divisors num)))
+
+(define (amicable? num)
+  (let ((div-sum (sum-of-divisors num)))
+    (and (not (= num div-sum))
+         (= (sum-of-divisors div-sum) num))))
+
+(define (main)
+  (let ((sum 0))
+    (do ((i 1 (+ i 1)))
+        ((>= i 10000) sum)
+      (if (amicable? i)
+          (begin (set! sum (+ i sum))
+                 (display i)
+                 (newline))))
+    (display "solution: ")
+    (display sum)
+    (newline)))
+
+;; 40284
+(main)
